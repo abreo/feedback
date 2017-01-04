@@ -1,0 +1,287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+    <title>question</title>
+    <style type="text/css">
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .wrapper{
+        position: relative;
+    }
+    .wrapper >p{
+        text-align: center;
+        height: 100px;
+        font-size: 100px;
+    }
+
+
+
+    #jkquiz-door{
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        position: fixed;
+        right: 10px;
+        bottom: 50px;
+        border: 1px solid #0691eb;
+        box-shadow: 2px 2px 2px #0691eb;
+        background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNSAzNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+R3JvdXAgNjwvdGl0bGU+PGcgZmlsbD0iIzAwOEZFQiIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTMgMTguM2MwLS40IDAtLjcuNC0xIC4yLS4yLjUtLjMuOC0uMy40IDAgLjcgMCAxIC40LjIuMi4zLjUuMyAxIDAgLjIgMCAuNS0uNC43IDAgLjQtLjQuNS0uOC41LS4zIDAtLjYgMC0uOC0uNC0uMyAwLS40LS40LS40LS43ek0xMCAxMC43di0xYy40LTEgMS41LTIuNyA0LjItMi43IDIgMCAzLjggMS40IDMuOCAzcy0xLjQgMi43LTIgMy4zYy0uOC42LTEgMS0xLjIgMS43LS4yLjYtLjYgMS0xLjMgMS0uMy0uMi0uNi0uMy0uNy0uNXYtLjhjMC0uMiAwLS43LjMtMS4ybDEuNC0xLjVjMS40LTEuMiAxLjYtMiAuOC0yLjgtLjUtLjQtMS42LS41LTIuMiAwLS44LjQtMSAxLTEuMiAxLjMtLjIuNS0uMyAxLTEuMyAxLS4zLS4yLS40LS40LS41LS44eiIvPjxwYXRoIGQ9Ik0yOS44IDEwLjJ2M2MxLjQgMS44IDIuMyA0IDIuMyA2LjMgMCAzLjgtMi4yIDctNS41IDl2My44bC0zLjctMi41LTMgLjNjLTIuOCAwLTQuMy0uOC02LjQtMi4yaC0zLjFDMTMgMzAuNCAxNS42IDMyIDIwIDMyYy44IDAgMS43IDAgMi42LS4ybDYgNHYtNi40YzMuNS0yLjQgNS43LTYgNS43LTEwIDAtMy42LTEuNy03LTQuNS05LjJ6TTE0LjQgMjUuNmM4IDAgMTMuMi02IDEzLjItMTNTMjEgMCAxNC40IDBDNi40IDAgMCA1LjcgMCAxMi43YzAgNCAxLjUgNy41IDQuNCAxMFYyOWw2LjMtMy42IDMuNy4yek0xNC4yIDJjNi41IDAgMTEuNSA1LjMgMTEuNSAxMUMyNS43IDE5IDIxIDI0IDE0LjQgMjRjLTEgMC0zLjYtLjMtNC41LS41TDYgMjUuN3YtNGMtMi43LTIuMi00LTUtNC04LjZDMiA3IDcgMiAxNCAyeiIvPjwvZz48L3N2Zz4=') no-repeat center;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+    .mask{
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom:0;
+        background:rgba(0,0,0,.6);
+    }
+    .quiz-container{
+        display: inline-block;
+        box-sizing: border-box;
+        width: 564px;
+        height: 640px;
+        max-height: calc(100vh - 24px * 2);
+        overflow-y: auto;
+        padding: 24px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -282px;
+        margin-top: -320px;
+        background: #fff;
+    }
+    .quiz-container h3{
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 40px;
+        text-align: center;
+        color: #333;
+        height: 40px;
+        margin-bottom: 20px;
+    }
+    .quiz-container #quiz-content{
+        display: block;
+        padding: 12px;
+        width: 100%;
+        height: auto;
+        font-size: 15px;
+        border: 1px solid #e7eaf1;
+        border-radius: 3px;
+        box-sizing: border-box;
+        resize: none;
+        outline: none;
+        color: #666;
+        transition: box-shadow .15s ease-out;
+        overflow: auto;
+        height: 78px;
+        margin-bottom: 12px;
+    }
+    #canvas-content{
+        background: #f6f7f9;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    #canvas-content canvas{
+        width: 100%;
+        cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAARpJREFUOBGdkr1KA0EUhTcxEkSQQIpAihQWPoedD2BnIVsZQiBVEkiR7SwtBDsJqXwBLQwEgoWNjY2FjYUQ38Ei5Oc7sBeGLTKze+Djzsyecxh2N4ryq0zkHpYQQ2H1SW5TNsxukaZzQsewACvTvIBg3eFUaABHMEv3OruBIN3icm8wZl+FZ3iBQ/AqweGW2FrlKlChV0McFsxOvaegm/T2lLzzTC/dqzaO7A1s/8GzE28Dhhj0f1jQnZ+c18CrKxxrcMO2/uK87m3AcAkrsKA7vzlvQJAmuNywrX84bwY1YBrBATyCFWj+QguCJKNCU1DZQ7r/Y55CsK5x2i2eWFcggTPIJd3Eiv5Zd3KlU3OJOQd9lVd4A5Xl1g4YG2GGhwRfegAAAABJRU5ErkJggg==) 0 17,default;
+    }
+
+    .quiz-label{
+        display: block;
+        height: 20px;
+        margin-top: 10px;
+        cursor: pointer;
+        color: #9aaabf;
+        transition: color .15s ease-out;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        vertical-align: middle;
+        font-size: 12px;
+    }
+    .quiz-checkbox{
+        display: inline-block;
+        line-height: 20px;
+        margin-left: 10px;
+        vertical-align: middle;
+    }
+    #quiz-submit{
+        display: block;
+        margin: 0 auto;
+        margin-top: 30px;
+        width: 190px;
+        height: 20px;
+        padding: 8px 1em;
+        background-color: #0f88eb;
+        border: 1px solid #0f88eb;
+        border-radius: 3px;
+        font: inherit;
+        color: #fff;
+        transition: background-color .15s ease-out,opacity .15s ease-out;
+        cursor: pointer;
+        outline: none;
+        text-decoration: none;
+        line-height: 20px;
+        text-align: center;
+        font-size: 13px;
+    }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <img src="http://a1.jikexueyuan.com/home/201612/07/340c/5847b23c580ca.jpg">
+        <p>1</p>
+        <p>2</p>
+        <p>3</p>
+        <p>4</p>
+        <p>5</p>
+        <p>6</p>
+        <p>7</p>
+        <p>8</p>
+        <p>9</p>
+        <p>10</p>
+        <p>11</p>
+        <p>12</p>
+        <p>13</p>
+        <p>14</p>
+        <p>15</p>
+        <p>16</p>
+        <p>17</p>
+        <p>18</p>
+        <p>19</p>
+        <p>20</p>
+    </div>
+
+<script type="text/javascript" src="./html2canvas.min.js"></script>
+<script type="text/javascript">
+
+    window.onload = function() {
+
+        var jkquiz = {
+            drawKey:false,
+            init:function(){
+                this.addDoor();
+                this.bind();
+            },
+            bind:function(){
+                var that = this
+                document.getElementById('jkquiz-door').addEventListener('click',that.active)
+            },
+            addDoor:function(){
+                var door = document.createElement('div')
+                door.setAttribute('id','jkquiz-door')
+                document.body.appendChild(door);
+            },
+            addDom:function(){
+                var mask = document.createElement('div')
+                var quizContainer = document.createElement('div')
+                var title = document.createElement('h3')
+                var textarea = document.createElement('textarea')
+                var label = document.createElement('label')
+                var checkbox = document.createElement('input')
+                var canvasContent = document.createElement('div')
+                var submit = document.createElement('a')
+
+
+                mask.setAttribute('class','mask')
+                quizContainer.setAttribute('class','quiz-container')
+                canvasContent.setAttribute('id','canvas-content')
+                title.innerText = '提交反馈';
+                textarea.setAttribute('id','quiz-content')
+                textarea.placeholder = '告诉我们你的建议或遇到的问题。';
+                textarea.rows = '3';
+                label.setAttribute('class','quiz-label')
+                label.innerText = '提交屏幕截图';
+                checkbox.setAttribute('class','quiz-checkbox')
+                checkbox.setAttribute('type','checkbox')
+                checkbox.setAttribute('checked','checked')
+                submit.setAttribute('id','quiz-submit')
+                submit.setAttribute('href','javascript:;')
+                submit.innerText = '提交';
+
+
+                quizContainer.appendChild(title);
+                quizContainer.appendChild(textarea);
+                quizContainer.appendChild(canvasContent);
+                label.appendChild(checkbox);
+                quizContainer.appendChild(label);
+                quizContainer.appendChild(submit);
+                mask.appendChild(quizContainer);
+                document.body.appendChild(mask);
+            },
+            active:function(){
+                document.body.style.overflow = 'hidden'
+                jkquiz.addDom()
+
+                var wrapper = document.getElementsByClassName('wrapper')[0]
+                var canvasContent = document.getElementById('canvas-content')
+                var wiHeight = window.innerHeight
+                var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+                var cW = parseInt(window.innerHeight * canvasContent.clientWidth / window.innerWidth)
+                canvasContent.style.height = cW +'px'
+
+                var drawCanvas = document.createElement('canvas')
+                drawCanvas.setAttribute('id','draw-container')
+                drawCanvas.width = canvasContent.clientWidth
+                drawCanvas.height = cW
+
+                html2canvas(wrapper,{
+                    allowTaint:true,
+                    height:wiHeight+scrollTop
+                }).then(function(canvas) {
+                    drawCanvas.getContext("2d").drawImage(canvas,0,0,window.innerWidth,wiHeight,0,0,canvasContent.clientWidth,cW);
+                    canvasContent.appendChild(drawCanvas);
+                    drawCanvas.addEventListener('mousedown',jkquiz.startDraw)
+                    drawCanvas.addEventListener('mousemove',jkquiz.drawIng)
+                    drawCanvas.addEventListener('mouseup',jkquiz.endDraw)
+                });
+            },
+            startDraw:function(e){
+                jkquiz.drawKey = true
+                var canvas = document.getElementById('draw-container')
+                var con = document.getElementsByClassName('quiz-container')[0]
+
+                var pencil = canvas.getContext("2d");
+                pencil.lineWidth = 2
+                pencil.strokeStyle = "red";
+
+                var canvasStrollLeft = (window.innerWidth - canvas.clientWidth)/2
+                var canvasStrollTop = (window.innerHeight - con.clientHeight )/2 +84 +90
+                var mouseX = e.clientX - canvasStrollLeft;
+                var mouseY = e.clientY - canvasStrollTop;
+                pencil.moveTo(mouseX, mouseY); //起始位置
+
+            },
+            drawIng:function(e){
+                if(jkquiz.drawKey){
+                    var canvas = document.getElementById('draw-container')
+                    var con = document.getElementsByClassName('quiz-container')[0]
+                    var pencil = canvas.getContext("2d");
+                    pencil.lineWidth = 2
+                    pencil.strokeStyle = "red";
+                    var canvasStrollLeft = (window.innerWidth - canvas.clientWidth)/2
+                    var canvasStrollTop = (window.innerHeight - con.clientHeight )/2 +84 +90
+                    var mouseX = e.clientX - canvasStrollLeft;
+                    var mouseY = e.clientY - canvasStrollTop;
+                    pencil.lineTo(mouseX,mouseY); //终止位置
+                    pencil.stroke(); //结束图形
+                }
+            },
+            endDraw:function(e){
+                jkquiz.drawKey = false
+            }
+        }
+        jkquiz.init();
+
+    }
+
+</script>
+</body>
+</html>
